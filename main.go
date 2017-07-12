@@ -106,6 +106,7 @@ func main() {
 	jobsService := api.NewJobsService(authedClient)
 	boshService := api.NewBoshFormService(authedCookieClient)
 	dashboardService := api.NewDashboardService(authedCookieClient)
+	certificateAuthoritiesService := api.NewCertificateAuthorities()
 
 	form, err := formcontent.NewForm()
 	if err != nil {
@@ -140,6 +141,7 @@ func main() {
 	commandSet["pending-changes"] = commands.NewPendingChanges(tableWriter, pendingChangesService)
 	commandSet["installations"] = commands.NewInstallations(installationsService, tableWriter)
 	commandSet["installation-log"] = commands.NewInstallationLog(installationsService, stdout)
+	commandSet["certificate-authorities"] = commands.NewCertificateAuthorities(certificateAuthoritiesService, tableWriter)
 
 	err = commandSet.Execute(command, args)
 	if err != nil {
